@@ -4,6 +4,7 @@
 
 #define N 3
 #define EMPTY_SPACE 0
+#define NO_NUMBER -1
 
 bool solveSoduko(int soduko[N*N][N*N]);
 
@@ -15,7 +16,7 @@ bool isValid(int soduko[N*N][N*N]);
 
 int main(){
 
-   int soduko[N*N][N*N] = {
+   int soduko[N*N][N*N] = { //52 empty cells
         {5,3,0,0,7,0,0,0,0},
         {6,0,0,1,9,5,0,0,0},
         {0,9,8,0,0,0,0,6,0},
@@ -64,7 +65,7 @@ bool aux(int soduko[N*N][N*N], int depth){
                 result = aux(soduko, depth + 1);
 
             //We found a solution
-            if (result == true)
+            if (result)
                 return true;
 
             //This number in this current location has no solution
@@ -97,8 +98,6 @@ void printBoard(int soduko[N*N][N*N]){
 
     }
 
-    printf("_______________________________________\n\n");
-
 }
 
 bool isValid(int soduko[N*N][N*N]){
@@ -117,11 +116,11 @@ bool isValid(int soduko[N*N][N*N]){
             int current_number = soduko[row][col] - 1;
 
             //There can't be 2 appearances of this number
-            if (current_number > -1 && hist[current_number])
+            if (current_number > NO_NUMBER && hist[current_number])
                 return false;
 
             //We've seen this number -> turn hist to true
-            if (current_number != -1)
+            if (current_number != NO_NUMBER)
                 hist[current_number] = true;
 
         }
@@ -140,11 +139,11 @@ bool isValid(int soduko[N*N][N*N]){
             int current_number = soduko[row][col] - 1;
 
             //There can't be 2 appearances of this number
-            if (current_number > -1 && hist[current_number] == true)
+            if (current_number > NO_NUMBER && hist[current_number] == true)
                 return false;
 
             //We've seen this number -> turn hist to true
-            if (current_number != -1)
+            if (current_number != NO_NUMBER)
                 hist[current_number] = true;
 
         }
@@ -166,10 +165,10 @@ bool isValid(int soduko[N*N][N*N]){
 
                     int current_number = soduko[row][col] - 1;
 
-                    if (current_number != -1 && hist[current_number] == true)
+                    if (current_number != NO_NUMBER && hist[current_number] == true)
                         return false;
 
-                    if (current_number != -1)
+                    if (current_number != NO_NUMBER)
                         hist[current_number] = true;
 
                 }
